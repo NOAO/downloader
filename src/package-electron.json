@@ -3,6 +3,7 @@
   "version": "%version;",
   "description": "%description;",
   "main": "lib/electron/starter.js",
+  "comments": "Use node-persist 2.0, Later versions cause issues with async functions",
   "scripts": {
     "start": "electron starter.js"
   },
@@ -21,7 +22,7 @@
     "diskspace": "*",
     "optimist": "*",
     "semver": "*",
-    "node-persist": "*",
+    "node-persist": "^2.0.0",
     "electron-window-state": "*"
   }
 }

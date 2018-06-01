@@ -2,6 +2,8 @@ addon-sdk*
 node_modules/
 server/node_modules/
 builds/unpacked
+builds/*.7z
+tmp/
 test/
 .DS_Store
 Thumbs.db

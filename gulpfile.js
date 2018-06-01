@@ -118,6 +118,21 @@ gulp.task('electron-install', function () {
     cwd: './builds/unpacked/electron'
   }));
 });
+gulp.task('electron-linux', function(){
+ let config = require('./package.json');
+ return gulp.src('')
+ .pipe(wait(1000))
+ .pipe(shell([
+ 'npm install',
+  `electron-packager . "Turbo Download Manager" --app-version=${config.version} --platform=linux --arch=x64 --electron-version=1.4.15`,
+    'mv "Turbo Download Manager-linux-x64" tdm-linux-x64',
+    '7z a -mx9 -r tdm-linux-x64.7z tdm-linux-x64/* > null',
+    'mv tdm-linux-x64.7z ../..',
+    'rm -r tdm-linux-x64/',
+    ], {
+    cwd: './builds/unpacked/electron'
+    } ));
+});
 gulp.task('electron-packager', function () {
   let config = require('./package.json');
   return gulp.src('')
