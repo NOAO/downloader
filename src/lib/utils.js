@@ -1,6 +1,6 @@
 'use strict';
 
-var app = app || require('./firefox/firefox');
+var app = app || require('./electron/starter');
 var utils = typeof exports === 'undefined' ? {} : exports;
 
 (function () {

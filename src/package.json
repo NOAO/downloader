@@ -1,1 +1,28 @@
-package-electron.json
+{
+  "name": "%name;",
+  "version": "%version;",
+  "description": "%description;",
+  "main": "lib/electron/starter.js",
+  "comments": "Use node-persist 2.0, Later versions cause issues with async functions",
+  "scripts": {
+    "start": "electron starter.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "%repository.url;"
+  },
+  "keywords": config.keywords,
+  "author": "%author;",
+  "license": "%license;",
+  "bugs": {
+    "url": "%bugs.url;"
+  },
+  "homepage": "%homepage;",
+  "dependencies": {
+    "diskspace": "*",
+    "optimist": "*",
+    "semver": "*",
+    "node-persist": "^2.0.0",
+    "electron-window-state": "*"
+  }
+}

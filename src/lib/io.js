@@ -1,6 +1,6 @@
 'use strict';
 
-var app = app || require('./firefox/firefox');
+var app = app || require('./electron/starter');
 var io = typeof exports === 'undefined' ? {} : exports;
 
 io.File = function (obj) {

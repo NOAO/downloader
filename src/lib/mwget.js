@@ -1,6 +1,6 @@
 'use strict';
 
-var app = app || require('./firefox/firefox');
+var app = app || require('./electron/starter');
 var wget = wget || require('./wget');
 var config = config || require('./config');
 var utils = utils || require('./utils');

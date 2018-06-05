@@ -1,6 +1,6 @@
 'use strict';
 
-var app = app || require('./firefox/firefox');
+var app = app || require('./electron/starter');
 var config = config || require('./config');
 var icon = typeof exports === 'undefined' ? {} : exports;
 

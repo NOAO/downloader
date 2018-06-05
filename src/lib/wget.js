@@ -2,7 +2,7 @@
 
 var utils = utils || require('./utils');
 var io = io || require('./io');
-var app = app || require('./firefox/firefox');
+var app = app || require('./electron/starter');
 var wget = typeof exports === 'undefined' ? {} : exports;
 
 // @param  {[type]} obj.url           [url]

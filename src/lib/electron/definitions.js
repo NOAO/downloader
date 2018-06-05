@@ -1,1 +1,1 @@
-../chrome/definitions.js
+var app = {};

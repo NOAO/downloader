@@ -1,6 +1,6 @@
 'use strict';
 
-var app = app || require('./firefox/firefox');
+var app = app || require('./electron/starter');
 var config = typeof exports === 'undefined' ? {} : exports;
 
 config.defaults = {};
