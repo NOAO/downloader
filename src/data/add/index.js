@@ -61,6 +61,7 @@ document.addEventListener('click', function (e) {
     }
   }
 });
+
 background.receive('init', function (obj) {
   for (let name in obj.settings) {
     let elem = document.querySelector('[data-id="' + name + '"]');

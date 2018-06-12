@@ -271,6 +271,7 @@ app.manager.receive('cmd', function (obj) {
     }));
   }
   if (obj.cmd === 'open') {
+      console.log("Opening...", obj);
     let instance = mwget.get(obj.id);
     let file = instance.internals.file;
     if (!file) {

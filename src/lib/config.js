@@ -150,22 +150,22 @@ config.titles = {
 
 /* config.urls */
 config.urls = {
-  bug: 'https://github.com/inbasic/turbo-download-manager/',
-  faq: 'http://add0n.com/turbo-download-manager.html',
-  helper: 'https://chrome.google.com/webstore/detail/turbo-download-manager-he/gnaepfhefefonbijmhcmnfjnchlcbnfc',
+    bug: 'https://github.com/ipetepete/turbo-download-manager',
+    faq: 'https://github.com/ipetepete/turbo-download-manager',
+    helper: 'https://github.com/ipetepete/turbo-download-manager',
   get bulk () {
     let urls = {
-      chrome: 'https://chrome.google.com/webstore/detail/bulk-media-downloader/ehfdcgbfcboceiclmjaofdannmjdeaoi',
-      firefox: 'https://addons.mozilla.org/firefox/addon/bulk-media-downloader/',
+        chrome: 'https://github.com/ipetepete/turbo-download-manager',
+        firefox: 'https://github.com/ipetepete/turbo-download-manager',
       opera: ''
     };
     return urls[app.globals.browser] || urls.chrome;
   },
-  sourceforge: 'https://sourceforge.net/projects/turbo-download-manager/files/?source=navbar',
-  releases: 'https://github.com/inbasic/turbo-download-manager/releases/',
+  sourceforge: '',
+  releases: '',
   api: {
-    latest: 'https://api.github.com/repos/inbasic/turbo-download-manager/releases/latest',
-    list: 'https://api.github.com/repos/inbasic/turbo-download-manager/releases'
+    latest: '',
+    list: ''
   }
 };
 

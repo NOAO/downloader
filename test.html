@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Document</title>
+    </head>
+    <style>
+     .dropzone{
+         background-color: lightgrey;
+         position:relative;
+         width: 300px;
+         height: 300px;
+     }
+    </style>
+    <body>
+        <a href="/resource.json">Link</a>
+
+        <div class="dropzone">
+
+        </div>
+
+        <script type="text/javascript">
+            function loadJSON(path, success, error)
+            {
+                var xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function()
+                {
+                    if (xhr.readyState === XMLHttpRequest.DONE) {
+                        if (xhr.status === 200) {
+                            if (success)
+                                success(JSON.parse(xhr.responseText));
+                        } else {
+                            if (error)
+                                error(xhr);
+                        }
+                    }
+                };
+                xhr.open("GET", path, true);
+                xhr.send();
+            }
+
+
+            function drop(e){
+                e.preventDefault();
+                console.log(e.dataTransfer.items);
+                console.log(e.dataTransfer.types);
+                console.log(e.dataTransfer.getData('text/uri-list'));
+                let uri = e.dataTransfer.getData('text/uri-list');
+
+                if( uri.match(/resource.json/) !== null){
+                    loadJSON(uri, (data)=>{
+                        console.log(data);
+                    },(error)=>{
+                        console.log(error);
+                    });
+                }
+
+            }
+
+            document.body.addEventListener("drop", drop, false);
+            // prevent redirection
+            (function (callback) {
+                window.addEventListener('dragover', callback,false);
+                window.addEventListener('drop',callback, false);
+            })(function (e) {
+                if (e.target.tagName !== 'INPUT') {
+                    e.preventDefault();
+                }
+            });
+
+            </script>
+    </body>
+
+</html>

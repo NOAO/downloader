@@ -280,7 +280,7 @@ function remove(id) {
   }
 }
 background.receive('remove', remove);
-background.receive('add', function (obj) {
+background.receive('add', function (obj){
   let item = get(obj.id);
   if (!item) {
     item = add(obj.id);
@@ -408,6 +408,10 @@ document.addEventListener('click', function (e) {
   }
 });
 /* drag & drop */
+/*#!
+  TODO:
+  Capture dropped resource and check if it's a json manifest
+*/
 var dd = {
   drop: function (e) {
     e.preventDefault();

@@ -15,11 +15,7 @@ var runSequence = require('run-sequence');
 /* clean */
 gulp.task('clean', function () {
   return gulp.src([
-    'builds/unpacked/chrome/*',
-    'builds/unpacked/opera/*',
-    'builds/unpacked/firefox/*',
-    'builds/unpacked/electron/*',
-    'builds/unpacked/android/*'
+    'builds/unpacked/electron/*'
   ], {read: false})
     .pipe(clean());
 });
@@ -62,7 +58,7 @@ function shadow (browser) {
       change(content => content.replace(/.*shadow_index\.js.*/, c3)),
       gulpif(f => f.relative.endsWith('.html'), change(content => content.replace(/.*shadow_index\.js.*/, c1)))
     )
-  )
+  );
 }
 
 /* electron build */
@@ -74,31 +70,13 @@ gulp.task('electron-build', function () {
     if (f.relative.endsWith('.DS_Store') || f.relative.endsWith('Thumbs.db')) {
       return false;
     }
-    if (f.relative.indexOf('firefox') !== -1 || f.relative.indexOf('android') !== -1 || f.relative.indexOf('opera') !== -1) {
-      return false;
-    }
-    if (f.relative.indexOf('chrome') !== -1 && !f.relative.endsWith('electron/chrome-cm.js') && !f.relative.endsWith('electron/chrome-shim.js')) {
-      return false;
-    }
-    if (f.relative.split('/').length === 1) {
-      return f.relative === 'package-electron.json';
-    }
-    return true;
-  }))
-  .pipe(rename(function (path) {
-    if (path.basename === 'package-electron') {
-      path.basename = 'package';
-    }
-    return path;
+      return true;
   }))
   .pipe(json(true))
-  .pipe(gulpif(function (f) {
-    return f.path.indexOf('.js') !== -1 && f.path.indexOf('.json') === -1;
-  }, change(function (content) {
-    return content.replace('firefox/firefox', 'electron/starter');
-  })))
-  .pipe(shadow('electron'))
-  .pipe(gulp.dest('builds/unpacked/electron'))
+  .pipe(gulp.dest('builds/unpacked/electron'));
+});
+gulp.task('install-deps', function(){
+    return gulp.src('').pipe(shell(['npm install'], {cwd: './builds/unpacked/electron'}));
 });
 gulp.task('electron-pack', function () {
   return gulp.src([
@@ -118,7 +96,7 @@ gulp.task('electron-install', function () {
     cwd: './builds/unpacked/electron'
   }));
 });
-gulp.task('electron-linux', function(){
+gulp.task('electron-pkg-linux', function(){
  let config = require('./package.json');
  return gulp.src('')
  .pipe(wait(1000))
@@ -168,237 +146,6 @@ gulp.task('electron-packager', function () {
     cwd: './builds/unpacked/electron'
   }));
 });
-/* chrome build */
-gulp.task('chrome-build', function () {
-  return gulp.src([
-    'src/**/*'
-  ])
-  .pipe(gulpFilter(function (f) {
-    if (f.relative.endsWith('.DS_Store') || f.relative.endsWith('Thumbs.db')) {
-      return false;
-    }
-    if (f.relative.indexOf('firefox') !== -1 || f.relative.indexOf('opera') !== -1 || f.relative.indexOf('android') !== -1 || f.relative.indexOf('electron') !== -1) {
-      return false;
-    }
-    if (f.relative.split('/').length === 1) {
-      return f.relative === 'manifest-app.json';
-    }
-    return true;
-  }))
-  .pipe(rename(function (path) {
-    if (path.basename === 'manifest-app') {
-      path.basename = 'manifest';
-    }
-    return path;
-  }))
-  .pipe(json(true))
-  .pipe(shadow('chrome'))
-  .pipe(gulp.dest('builds/unpacked/chrome'))
-});
-gulp.task('chrome-pack', function () {
-  return gulp.src([
-    'builds/unpacked/chrome/**/*'
-  ])
-  .pipe(zip('chrome.zip'))
-  .pipe(gulp.dest('builds/packed'));
-});
-gulp.task('chrome-install', function () {
-  return gulp.src('')
-  .pipe(wait(1000))
-  .pipe(shell([
-    '"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --console --load-and-launch-app=`pwd` &'
-  ], {
-    cwd: './builds/unpacked/chrome'
-  }));
-});
-/* opera build */
-gulp.task('opera-build', function () {
-  return gulp.src([
-    'src/**/*'
-  ])
-  .pipe(gulpFilter(function (f) {
-    if (f.relative.endsWith('.DS_Store') || f.relative.endsWith('Thumbs.db')) {
-      return false;
-    }
-    if (f.relative.indexOf('firefox') !== -1 || f.relative.indexOf('android') !== -1 || f.relative.indexOf('electron') !== -1) {
-      return false;
-    }
-    if (f.relative.indexOf('chrome') !== -1 && f.relative.indexOf('opera/chrome-cm.js') === -1 && f.relative.indexOf('opera/chrome-br.js') === -1) {
-      return false;
-    }
-    if (f.relative.split('/').length === 1) {
-      return f.relative === 'manifest-extension.json';
-    }
-    return true;
-  }))
-  .pipe(rename(function (path) {
-    if (path.basename === 'manifest-extension') {
-      path.basename = 'manifest';
-    }
-    return path;
-  }))
-  .pipe(json(true))
-  .pipe(shadow('opera'))
-  .pipe(gulp.dest('builds/unpacked/opera'))
-});
-gulp.task('opera-pack', function () {
-  return gulp.src([
-    'builds/unpacked/opera/**/*'
-  ])
-  .pipe(zip('opera.zip'))
-  .pipe(gulp.dest('builds/packed'));
-});
-gulp.task('opera-install', function () {
-  gulp.src('')
-  .pipe(wait(1000))
-  .pipe(shell([
-    '"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --console --load-and-launch-app=`pwd` &'
-  ], {
-    cwd: './builds/unpacked/opera'
-  }));
-});
-/* android build */
-gulp.task('android-build', function () {
-  return gulp.src([
-    'src/**/*'
-  ])
-  .pipe(gulpFilter(function (f) {
-    if (f.relative.endsWith('.DS_Store') || f.relative.endsWith('Thumbs.db')) {
-      return false;
-    }
-    if (f.relative.indexOf('firefox') !== -1 || f.relative.indexOf('opera') !== -1 || f.relative.indexOf('electron') !== -1) {
-      return false;
-    }
-    if (f.relative.indexOf('chrome') !== -1 && f.relative.indexOf('android/chrome-cm.js') === -1 && f.relative.indexOf('android/chrome-shim.js') === -1) {
-      return false;
-    }
-    if (f.relative.split('/').length === 1) {
-      return f.relative === 'config.xml';
-    }
-    return true;
-  }))
-  .pipe(json())
-  .pipe(shadow('android'))
-  .pipe(gulpif(function (f) {
-    return f.path.endsWith('.js') &&
-      !f.relative.endsWith('EventEmitter.js') &&
-      !f.relative.endsWith('video.js') &&
-      !f.relative.endsWith('showdown.js') &&
-      !f.relative.endsWith('dexie.js');
-  }, babel({
-    presets: ['es2015']
-  })))
-  .pipe(gulp.dest('builds/unpacked/android'))
-});
-gulp.task('android-pack', function () {
-  return gulp.src([
-    'builds/unpacked/android/**/*'
-  ])
-  .pipe(zip('android.zip'))
-  .pipe(gulp.dest('builds/packed'));
-});
-gulp.task('android-apk', function () {
-  return gulp.src('')
-  .pipe(shell([
-    'cordova platform add android',
-    'cordova plugin add cordova-plugin-admobpro',
-    'cordova plugin add cordova-plugin-background-mode',
-    'cordova plugin add https://github.com/VersoSolutions/CordovaClipboard',
-    'cordova plugin add https://github.com/fastrde/phonegap-md5.git',
-    'cordova plugin add https://github.com/whiteoctober/cordova-plugin-app-version.git',
-    'cordova plugin add ../../plugins/android/cordova-plugin-binaryfilewriter/',
-    'cordova plugin add ../../plugins/android/cordova-plugin-customconfig/',
-    'cordova plugin add ../../plugins/android/cordova-plugin-socksproxy/',
-    'cordova plugin add cordova-plugin-intent',
-    'cordova plugin add cordova-plugin-x-toast',
-    'cordova plugin add cordova-plugin-fileopener',
-    'openssl aes-256-cbc -k $ENCRYPTION_PASSWORD -in ../packed/keys.p12.enc -d -a -out platforms/android/keys.p12',
-    'printf "storeFile=keys.p12\\nkeyAlias=ReleaseKey\\nkeyPassword=$ENCRYPTION_PASSWORD\\nstorePassword=$ENCRYPTION_PASSWORD" > platforms/android/release-signing.properties',
-    'cordova build --release'
-  ], {
-    cwd: 'builds/TDM'
-  }));
-});
-gulp.task('android-run', function () {
-  return gulp.src('')
-  .pipe(wait(1000))
-  .pipe(shell([
-    'pwd & cordova run android'
-  ], {
-    cwd: 'trash/android/TDM/'
-  }));
-});
-
-/* firefox build */
-gulp.task('firefox-build', function () {
-  return gulp.src([
-    'src/**/*'
-  ])
-  .pipe(gulpFilter(function (f) {
-    if (f.relative.endsWith('.DS_Store') || f.relative.endsWith('Thumbs.db')) {
-      return false;
-    }
-    if (f.relative.indexOf('chrome') !== -1 &&
-      f.relative !== 'chrome.manifest' &&
-      f.relative.indexOf('firefox/chrome') === -1
-    ) {
-      return false;
-    }
-    if (f.relative.indexOf('opera') !== -1 || f.relative.indexOf('android') !== -1 || f.relative.indexOf('electron') !== -1) {
-      return false;
-    }
-    if (f.relative.split('/').length === 1) {
-      return ['package-firefox.json', 'chrome.manifest'].indexOf(f.relative) !== -1;
-    }
-    return true;
-  }))
-  .pipe(rename(function (path) {
-    if (path.basename === 'package-firefox') {
-      path.basename = 'package';
-    }
-    return path;
-  }))
-  .pipe(json())
-  .pipe(gulpif(function (f) {
-    return f.path.indexOf('.html') !== -1;
-  }, change(function (content) {
-    return content.replace(/\n.*shadow_index\.js.*/, '');
-  })))
-  .pipe(gulp.dest('builds/unpacked/firefox'));
-});
-/* firefox pack */
-gulp.task('firefox-pack', function () {
-  return gulp.src('')
-  .pipe(wait(1000))
-  .pipe(shell([
-    'jpm xpi',
-    'mv *.xpi ../../packed/firefox.xpi',
-  ], {
-    cwd: './builds/unpacked/firefox'
-  }))
-  .pipe(shell([
-    'zip firefox.xpi icon.png icon64.png',
-  ], {
-    cwd: './builds/packed'
-  }));
-});
-/* firefox install */
-gulp.task('firefox-install', function () {
-  return gulp.src('')
-  .pipe(shell([
-    'jpm post --post-url http://localhost:8888/'
-  ], {
-    cwd: './builds/unpacked/firefox'
-  }))
-});
-/* */
-gulp.task('android', (callback) => runSequence('clean', 'android-build', 'android-pack', 'android-run', callback));
-gulp.task('android-travis', (callback) => runSequence('clean', 'android-build', 'android-pack', callback));
-gulp.task('chrome', (callback) => runSequence('clean', 'chrome-build', 'chrome-pack', 'chrome-install', callback));
-gulp.task('chrome-travis', (callback) => runSequence('clean', 'chrome-build', 'chrome-pack', callback));
-gulp.task('opera', (callback) => runSequence('clean', 'opera-build', 'opera-pack', callback));
-gulp.task('opera-travis', (callback) => runSequence('clean', 'opera-build', 'opera-pack', callback));
-gulp.task('firefox', (callback) => runSequence('clean', 'firefox-build', 'firefox-pack', 'firefox-install', callback));
-gulp.task('firefox-travis', (callback) => runSequence('clean', 'firefox-build', 'firefox-pack', callback));
-gulp.task('electron', (callback) => runSequence('clean', 'electron-build', 'electron-pack', 'electron-install', callback));
-gulp.task('electron-travis', (callback) => runSequence('clean', 'electron-build', 'electron-pack', callback));
+gulp.task('electron', (callback) => runSequence('clean', 'electron-build', 'electron-pack', callback));
+gulp.task('electron-linux', (callback)=> runSequence('clean','electron-build', 'electron-pkg-linux', callback));
+gulp.task('electron-travis', (callback) => runSequence('clean', 'electron-build', 'electron-pack', 'install-deps', callback));
