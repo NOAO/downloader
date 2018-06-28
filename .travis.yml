@@ -1,4 +1,4 @@
-language: android
+language: javascript
 sudo: required
 before_install:
 - nvm install 6.2
