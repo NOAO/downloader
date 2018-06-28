@@ -3,6 +3,7 @@ sudo: required
 before_install:
 - nvm install 6.2
 - nvm use 6.2
+sudo: required
 install:
 - curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
 - echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
