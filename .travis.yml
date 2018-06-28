@@ -4,7 +4,7 @@ before_install:
 - nvm install 6.2
 - nvm use 6.2
 before_script:
-- npm install
+- yarn install
 script:
 - gulp electron-travis
 before_deploy:
@@ -12,6 +12,9 @@ before_deploy:
 - sudo add-apt-repository -y ppa:ubuntu-wine/ppa
 - sudo apt-get update -qq
 - sudo apt-get install -y wine1.6 p7zip-full
+- curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+- echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+- apt install --no-recommends yarn
 - unzip builds/packed/electron.zip -d builds/unpacked/electron
 - gulp electron-packager
 deploy:
