@@ -35,6 +35,11 @@ document.querySelector('form').addEventListener('submit', function (e) {
 document.querySelector('[data-id=url]').addEventListener('keyup', function () {
   let length = this.value.split(/\s*\,\s*http/).length;
   document.body.dataset.batch = length > 1;
+  if( length > 1){
+    document.querySelector('[data-id=item-count]').innerText = length +" items will be queued for download"
+  }else{
+    document.querySelector('[data-id=item-count]').innerText = "";
+  }
 }, false);
 
 background.receive('folder', function (folder) {
@@ -70,6 +75,7 @@ background.receive('init', function (obj) {
     }
   }
   document.querySelector('[data-id=url]').value = link || obj.clipboard;
+  
   let e = document.createEvent('HTMLEvents');
   e.initEvent('keyup', false, true);
   document.querySelector('[data-id=url]').dispatchEvent(e);

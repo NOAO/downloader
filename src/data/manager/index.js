@@ -80,7 +80,11 @@ background.receive('notify', notify);
       let items = document.querySelectorAll('.item');
       clear([].filter.call(items, i => i.dataset.type === role));
     }
-    else {
+    else if(role === 'all'){
+      let items = document.querySelectorAll('.item');
+      clear(items);
+    }
+    else{
       background.send('open', role);
     }
   });
@@ -260,7 +264,25 @@ var actions = (function (add, loader, iframe) {
     add: function (link) {
       loader.dataset.visible = true;
       iframe.src = '../add/index.html' + (link ? '?url=' + encodeURIComponent(format(link)) : '');
+    },
+    loadJSON: function(path, success, error){
+      var xhr = new XMLHttpRequest();
+      xhr.onreadystatechange = function()
+      {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+          if (xhr.status === 200) {
+            if (success)
+              success(JSON.parse(xhr.responseText));
+          } else {
+            if (error)
+              error(xhr);
+          }
+        }
+      };
+      xhr.open("GET", path, true);
+      xhr.send();
     }
+
   };
 })(document.getElementById('add'), document.getElementById('loader'), document.querySelector('#loader iframe'));
 
@@ -417,7 +439,26 @@ var dd = {
     e.preventDefault();
     // Get the id of the target and add the moved element to the target's DOM
     let link = e.dataTransfer.getData('text/uri-list');
-    if (link) {
+    console.log("Link is: ", link);
+    if(link && link.match(/resource-list/) !== null){
+      actions.loadJSON(link, (data)=>{
+        if( data && data.length > 0){
+          var uri = "";
+          for(var i in data){
+            uri += data[i] + ",";
+          }
+          uri = uri.substr(0, uri.length-1);
+          actions.add(uri);
+        }else if(data){
+          // no data or empty
+          console.error("Data is empty: ", data);
+        }
+      }, (error)=>{
+        // error receiving json file
+        console.error("Retreiving json file failed");
+      });
+    }else if (link) {
+      console.log("adding link normally");
       actions.add(link);
     }
   },

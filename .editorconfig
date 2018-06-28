@@ -2,4 +2,4 @@ root = true
 
 [*.{js,json,yml}]
 indent_style = space
-indent_space = 2
+indent_size = 2

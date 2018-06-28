@@ -46,6 +46,8 @@ actions.download = function (obj) {
   }
   mwget.download(obj);
 };
+
+
 actions.open = {
   bug: () => app.tab.open(config.urls.bug),
   faq: () => app.tab.open(config.urls.faq),

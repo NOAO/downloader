@@ -150,13 +150,13 @@ config.titles = {
 
 /* config.urls */
 config.urls = {
-    bug: 'https://github.com/ipetepete/turbo-download-manager',
-    faq: 'https://github.com/ipetepete/turbo-download-manager',
-    helper: 'https://github.com/ipetepete/turbo-download-manager',
+    bug: 'https://github.com/NOAO/downloader',
+  faq: 'https://github.com/NOAO/downloader',
+  helper: 'https://github.com/NOAO/downloader',
   get bulk () {
     let urls = {
-        chrome: 'https://github.com/ipetepete/turbo-download-manager',
-        firefox: 'https://github.com/ipetepete/turbo-download-manager',
+      chrome: 'https://github.com/NOAO/downloader',
+      firefox: 'https://github.com/NOAO/downloader',
       opera: ''
     };
     return urls[app.globals.browser] || urls.chrome;

@@ -24,6 +24,13 @@ input {
   min-height: 28px;
   outline: none;
 }
+td:empty:after{
+    content: "\00a0";
+}
+*[data-id=item-count]{
+    font-weight: bold;
+    color: chocolate;
+}
 input[type=button] {
   cursor: pointer;
 }

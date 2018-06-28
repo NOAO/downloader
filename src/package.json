@@ -5,7 +5,7 @@
   "main": "lib/electron/starter.js",
   "comments": "Use node-persist 2.0, Later versions cause issues with async functions",
   "scripts": {
-    "start": "electron starter.js"
+    "start": "electron lib/electron/starter.js"
   },
   "repository": {
     "type": "git",
