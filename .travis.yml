@@ -1,34 +1,23 @@
 language: android
 sudo: required
 before_install:
-  - nvm install 6.2
-  - nvm use 6.2
+- nvm install 6.2
+- nvm use 6.2
 before_script:
-  - npm install
+- npm install
 script:
-  - gulp electron-travis
+- gulp electron-travis
 before_deploy:
-  # pre deploy
-  - export DISPLAY=:99.0
-  - sudo add-apt-repository -y ppa:ubuntu-wine/ppa # wine 1.6
-  - sudo apt-get update -qq
-  - sudo apt-get install -y wine1.6 p7zip-full
-  # electron
-  - unzip builds/packed/electron.zip -d builds/unpacked/electron
-  - gulp electron-packager
+- export DISPLAY=:99.0
+- sudo add-apt-repository -y ppa:ubuntu-wine/ppa
+- sudo apt-get update -qq
+- sudo apt-get install -y wine1.6 p7zip-full
+- unzip builds/packed/electron.zip -d builds/unpacked/electron
+- gulp electron-packager
 deploy:
   provider: releases
-  prerelease: true
   api_key:
-    secure: OovJYivgJ4OsFRCz8evNSAwuoS8cO8RJRS4qKkF1g2OjwgIRZssRPz4ZbWj8J+SGCX0Fg8eyogWUxHLankARlJsL9Oq7jg+oiHQOW5OQax4uaMqDNmVfukBw6v6c0ITahK9WA6+p0FCdv6eskILqhj+7dD7TPJaKzzlNVbFK31XFGUI+SrD/jLhPkL8f7fiUXStIOrLInFNzKmQRNzc1K5v9neUQgVjOdoSQC97RJ/cavTA+0B1yyBLik9VgRD+VaxoWa83Pkl0PGx2vXWmmpXQDnWjD+KvfMvNAbBAlL5XQektvvgMti5bTkl3hyd51MIbg8/SaNJe0pul7t/0HvP2oq6Ke92JjgcGXhZr88I8lghftDZY7tPoVdrKj1+B/T3rRtNp8KCW3KX+GSCDqCEMXEydQa1jCIE5Z/IpZPlFSfr5i30zaifyHsPu4oKvhXwH3vaQpOvdNDNfZ0iIpaSqFb4l6dJKZjlnlVtdzwtE0uZliZ0+igY4ann2EElLGTfIliAOuX0MD0/yj4b2gdYbFjoNzCNxlcoFFtcSpM4dotfz7mNYJIlJHkyQ8mxqssUKCmDZ34d+bgiVUKCA5EDf67sMnc2bLOMC1H/dxtEGXrxltizWOup3tknBzP03r49WhCqPDqWfmxMaaBuYsMMrsbGYbJJ8CUSo0UJR6upI=
-  file:
-    - builds/packed/electron.zip
-    - builds/tdm-darwin-x64.7z
-    - builds/tdm-win32-x64.7z
-    - builds/tdm-win32-ia32.7z
-    - builds/tdm-linux-x64.7z
-    - builds/tdm-linux-ia32.7z
+    secure: YvS+duWNM4XgTbNTleX7U9PYA6yGrIcWmfWDolxV/kCKFxPDu2QftRsEp3cnxNAZktnzGwDIEK/MkVFavsrBrHWnrOXOpFyTgMNlGNoktbERrH4QHwPrkdtUft6eqvwixs2TW43WWNWRnEH0hxOyVZi/CIBfsAYjBF7BRRIA6Tmkt3lIztYh+7opLkZ2HeYlKiAyd1DgJ/PPWh8F1chW4BLIXe5alWno4rlosnkI9t4tHDyQZ30iXrMxew4KEkPZ7TQQsP/rMhlwPbuX8AtXWoqbYPBG7tf1pYrkWUv99CFgATdzM6HkaC4co+KphNDySry8dgqq1BRVLM2XvwbhSXwKTdZa2iuOwNIPLjpuu6qyqYijLqjD8EOF9GcmU4mrRgePODHtfUtow6OBAx+Y4PVopoUVF3+yqJkziD5QHzkvewp58Wsdy6UH5Xh2uLWJuJQV1o5diXBjD3tbiQ7cpMBcgsY6BBKspkjrLtWxxtDnlEbHACMs4uBmSDyWn2hEl1AcXJ7EK8uQ5bm25N9rKgQaW1UAHHrrMUANPOyty5ma3nevVbRCx1wZeSCpCx3MTsbuJs+Tmgvc/QFBy+C0zDbMEIw3Mv9LOa35tDMP2WDhdg9PggGr0RGi/RSToZ/La3RJHl7tvCZ9XGkAMFcWUS5nF88YadAeTbpgamB/8ac=
+  file: builds/packed/electron.zip
   on:
-    tags: true
-  overwrite: true
-  skip_cleanup: true
+    repo: NOAO/downloader

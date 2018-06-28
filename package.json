@@ -1,18 +1,18 @@
 {
-  "name": "itdmanager",
-  "title": "Turbo Download Manager",
-  "version": "0.3.4",
+  "name": "downloader",
+  "title": "NOAO Archive Downloader",
+  "version": "0.1",
   "description": "a download manager with multi-threading support",
   "scripts": {},
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/inbasic/turbo-download-manager.git"
+    "url": "git+https://github.com/noao/downloader.git"
   },
-  "author": "InBasic",
-  "email": "inb.cor@gmail.com",
+  "author": "Peter Peterson",
+  "email": "peter.peterson.iv@gmail.com",
   "license": "MPL-2.0",
   "bugs": {
-    "url": "https://github.com/inbasic/turbo-download-manager/issues"
+    "url": "https://github.com/noao/downloader/issues"
   },
   "keywords": [
     "Electron",
@@ -21,23 +21,21 @@
     "Flashget",
     "Internet Download Manager"
   ],
-  "homepage": "http://add0n.com/turbo-download-manager.html",
+  "homepage": "",
   "dependencies": {
-    "gulp": "*",
-    "gulp-change": "*",
-    "gulp-babel": "*",
     "babel-preset-es2015": "*",
-    "gulp-if": "*",
+    "electron-packager": "*",
+    "gulp": "^3.9.1",
+    "gulp-babel": "*",
+    "gulp-change": "*",
+    "gulp-clean": "*",
     "gulp-filter": "*",
+    "gulp-if": "*",
+    "gulp-rename": "*",
     "gulp-shell": "*",
     "gulp-wait": "*",
-    "gulp-clean": "*",
     "gulp-zip": "*",
-    "gulp-rename": "*",
-    "run-sequence": "*",
-    "jpm": "*",
-    "electron-packager": "*",
-    "cordova": ""
+    "run-sequence": "*"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
