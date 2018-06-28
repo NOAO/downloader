@@ -1,13 +1,11 @@
-language: javascript
+language: node_js
 sudo: required
+cache: yarn
 before_install:
 - nvm install 6.2
 - nvm use 6.2
-install:
-- curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
-- echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
-- sudo apt install yarn
 before_script:
+- npm install -g yarn
 - yarn install
 script:
 - gulp electron-travis
