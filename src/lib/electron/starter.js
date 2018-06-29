@@ -76,7 +76,7 @@ var contextmenu = (function () {
 
   return {
     app: () => electron.Menu.setApplicationMenu(electron.Menu.buildFromTemplate([
-      {label: 'Turbo Download Manager', submenu: application},
+      {label: 'Downloader', submenu: application},
       {label: 'Edit', submenu: edit({})},
       {label: 'Help', submenu: help}
     ])),

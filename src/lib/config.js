@@ -162,10 +162,10 @@ config.urls = {
     return urls[app.globals.browser] || urls.chrome;
   },
   sourceforge: '',
-  releases: '',
+  releases: 'https://github.com/NOAO/downloader/releases',
   api: {
-    latest: '',
-    list: ''
+    latest: 'https://api.github.com/repos/noao/downloader/releases/latest',
+    list: 'https://api.github.com/repos/noao/downloader/releases'
   }
 };
 

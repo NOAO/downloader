@@ -43,7 +43,7 @@ app.developer = {
   console: electron.developer
 };
 
-app.notification = (body) => new window.Notification('Turbo Download Manager', {
+app.notification = (body) => new window.Notification('NOAO Downloader', {
   body,
   icon: '../../data/icons/128.png'
 });
@@ -203,7 +203,7 @@ app.confirm = window.confirm;
 
 app.runtime = (function () {
   function warn (e) {
-    if (!window.confirm('There are still some ongoing jobs that cannot be resumed if Turbo Download Manager is closed. Note that only paused jobs are resumed after suspension. Are you sure you want to exit?')) {
+    if (!window.confirm('There are still some ongoing jobs that cannot be resumed if Downloader is closed. Note that only paused jobs are resumed after suspension. Are you sure you want to exit?')) {
       e.preventDefault();
       return 'true';
     }
@@ -234,9 +234,9 @@ window.setTimeout(function () {
 
     if (versions.length) {
       let version = versions.shift();
-      let url = `${config.urls.releases}download/${version}/tdm-${electron.process.platform}-${electron.os.arch()}.7z`;
+      let url = `${config.urls.releases}download/${version}/downloader-${electron.process.platform}-${electron.os.arch()}.7z`;
       app.manager.send('electron:update', {
-        title: `New version of "Turbo Download Manager" is available (${version}). Would you like to update?`,
+        title: `New version of "NOAO Downloader" is available (${version}). Would you like to update?`,
         url,
         referrer: config.urls.releases
       });

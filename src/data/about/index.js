@@ -3,6 +3,7 @@
 
 /* generating links */
 background.receive('latest', function (latest) {
+  console.log("latest", latest);
   if (latest && latest.assets && latest.assets.length) {
     latest.assets.forEach(function (obj) {
       let elem = document.querySelector(`[data-prerelease="${obj.name}"]`);
@@ -13,6 +14,7 @@ background.receive('latest', function (latest) {
   }
 });
 background.receive('release', function (latest) {
+  console.log("release", latest);
   if (latest) {
     latest.assets.forEach(function (obj) {
       let elem = document.querySelector(`[data-release="${obj.name}"]`);

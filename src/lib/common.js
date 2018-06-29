@@ -137,7 +137,7 @@ app.on('download', actions.download);
       }))]
     );
   }
-  app.menu.bind(app, 'Turbo Download Manager').apply(app, arr);
+  app.menu.bind(app, 'Downloader').apply(app, arr);
 })([
   ['Download now', actions.download],
   ['Download later', (obj) => actions.download(Object.assign(obj, {
@@ -513,6 +513,7 @@ app.startup(function () {
   // FAQs page
   let version = config.welcome.version;
   app.version().then(function (v) {
+    console.log("Checking versions..config version: "+version+" app version: "+v);
     if (v !== version) {
       app.timer.setTimeout(function () {
         app.tab.open(
