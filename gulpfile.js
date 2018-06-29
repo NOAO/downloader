@@ -102,11 +102,11 @@ gulp.task('electron-pkg-linux', function(){
  .pipe(wait(1000))
  .pipe(shell([
  'npm install',
-  `electron-packager . "Turbo Download Manager" --app-version=${config.version} --platform=linux --arch=x64 --electron-version=1.4.15`,
-    'mv "Turbo Download Manager-linux-x64" tdm-linux-x64',
-    '7z a -mx9 -r tdm-linux-x64.7z tdm-linux-x64/* > null',
-    'mv tdm-linux-x64.7z ../..',
-    'rm -r tdm-linux-x64/',
+  `electron-packager . "NOAO-Downloader" --app-version=${config.version} --platform=linux --arch=x64 --electron-version=1.4.15`,
+    'mv "NOAO-Downloader-linux-x64" downloader-linux-x64',
+    '7z a -mx9 -r downloader-linux-x64.7z downloader-linux-x64/* > null',
+    'mv downloader-linux-x64.7z ../..',
+    'rm -r downloader-linux-x64/',
     ], {
     cwd: './builds/unpacked/electron'
     } ));
@@ -116,36 +116,37 @@ gulp.task('electron-packager', function () {
   return gulp.src('')
   .pipe(wait(1000))
   .pipe(shell([
-    'npm install',
-    `electron-packager . "Turbo Download Manager" --app-version=${config.version} --platform=darwin --arch=x64 --electron-version=1.4.15 --icon ../../packed/mac.icns`,
-    'mv "Turbo Download Manager-darwin-x64" tdm-darwin-x64',
-    '7z a -mx9 -r tdm-darwin-x64.7z tdm-darwin-x64/* > null',
-    'mv tdm-darwin-x64.7z ../..',
-    'rm -r tdm-darwin-x64/',
-    `electron-packager . "Turbo Download Manager" --app-version=${config.version} --platform=win32 --arch=x64 --electron-version=1.4.15 --icon ../../packed/windows.ico`,
-    'mv "Turbo Download Manager-win32-x64" tdm-win32-x64',
-    '7z a -mx9 -r tdm-win32-x64.7z tdm-win32-x64/* > null',
-    'mv tdm-win32-x64.7z ../..',
-    'rm -r tdm-win32-x64/',
-    `electron-packager . "Turbo Download Manager" --app-version=${config.version} --platform=win32 --arch=ia32 --electron-version=1.4.15 --icon ../../packed/windows.ico`,
-    'mv "Turbo Download Manager-win32-ia32" tdm-win32-ia32',
-    '7z a -mx9 -r tdm-win32-ia32.7z tdm-win32-ia32/* > null',
-    'mv tdm-win32-ia32.7z ../..',
-    'rm -r tdm-win32-ia32/',
-    `electron-packager . "Turbo Download Manager" --app-version=${config.version} --platform=linux --arch=x64 --electron-version=1.4.15`,
-    'mv "Turbo Download Manager-linux-x64" tdm-linux-x64',
-    '7z a -mx9 -r tdm-linux-x64.7z tdm-linux-x64/* > null',
-    'mv tdm-linux-x64.7z ../..',
-    'rm -r tdm-linux-x64/',
-    `electron-packager . "Turbo Download Manager" --app-version=${config.version} --platform=linux --arch=ia32 --electron-version=1.4.15`,
-    'mv "Turbo Download Manager-linux-ia32" tdm-linux-ia32',
-    '7z a -mx9 -r tdm-linux-ia32.7z tdm-linux-ia32/* > null',
-    'mv tdm-linux-ia32.7z ../..',
-    'rm -r tdm-linux-ia32/'
+    'yarn install',
+    `electron-packager . "NOAO-Downloader" --app-version=${config.version} --platform=darwin --arch=x64 --electron-version=1.4.15 --icon ../../packed/mac.icns`,
+    'mv "NOAO-Downloader-darwin-x64" downloader-darwin-x64',
+    '7z a -mx9 -r downloader-darwin-x64.7z downloader-darwin-x64/* > null',
+    'mv downloader-darwin-x64.7z ../..',
+    'rm -r downloader-darwin-x64/',
+    `electron-packager . "NOAO-Downloader" --app-version=${config.version} --platform=win32 --arch=x64 --electron-version=1.4.15 --icon ../../packed/windows.ico`,
+    'mv "NOAO-Downloader-win32-x64" downloader-win32-x64',
+    '7z a -mx9 -r downloader-win32-x64.7z downloader-win32-x64/* > null',
+    'mv downloader-win32-x64.7z ../..',
+    'rm -r downloader-win32-x64/',
+    `electron-packager . "NOAO-Downloader" --app-version=${config.version} --platform=win32 --arch=ia32 --electron-version=1.4.15 --icon ../../packed/windows.ico`,
+    'mv "NOAO-Downloader-win32-ia32" downloader-win32-ia32',
+    '7z a -mx9 -r downloader-win32-ia32.7z downloader-win32-ia32/* > null',
+    'mv downloader-win32-ia32.7z ../..',
+    'rm -r downloader-win32-ia32/',
+    `electron-packager . "NOAO-Downloader" --app-version=${config.version} --platform=linux --arch=x64 --electron-version=1.4.15`,
+    'mv "NOAO-Downloader-linux-x64" downloader-linux-x64',
+    '7z a -mx9 -r downloader-linux-x64.7z downloader-linux-x64/* > null',
+    'mv downloader-linux-x64.7z ../..',
+    'rm -r downloader-linux-x64/',
+    `electron-packager . "NOAO-Downloader" --app-version=${config.version} --platform=linux --arch=ia32 --electron-version=1.4.15`,
+    'mv "NOAO-Downloader-linux-ia32" downloader-linux-ia32',
+    '7z a -mx9 -r downloader-linux-ia32.7z downloader-linux-ia32/* > null',
+    'mv downloader-linux-ia32.7z ../..',
+    'rm -r downloader-linux-ia32/'
   ], {
     cwd: './builds/unpacked/electron'
   }));
 });
 gulp.task('electron', (callback) => runSequence('clean', 'electron-build', 'electron-pack', callback));
 gulp.task('electron-linux', (callback)=> runSequence('clean','electron-build', 'electron-pkg-linux', callback));
-gulp.task('electron-travis', (callback) => runSequence('clean', 'electron-build', 'electron-pack', 'install-deps', callback));
+gulp.task('electron-travis', (callback) => runSequence('clean', 'electron-build', 'electron-pack',  callback));
+gulp.task('electron-local', (callback) => runSequence('clean', 'electron-build', 'electron-pack', 'install-deps', callback));
